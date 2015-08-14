@@ -1,6 +1,5 @@
 package com.unruly.pipeline;
 
-import com.amazonaws.regions.Region;
 import com.amazonaws.services.kinesis.producer.KinesisProducer;
 import com.amazonaws.services.kinesis.producer.KinesisProducerConfiguration;
 
@@ -26,11 +25,11 @@ public class KinesisPublish {
                 .setRegion("us-east-1");
 
         KinesisProducer k = new KinesisProducer(config);
-        for (int i = 0; i < 10000; ++i) {
+        for (int i = 0; i < 100; ++i) {
             try {
-                ByteBuffer data = ByteBuffer.wrap("myData".getBytes("UTF-8"));
-                // doesn't block
-                k.addUserRecord("test-kinesis", "myPartitionKey", data);
+                ByteBuffer data = ByteBuffer.wrap("myNewData".getBytes("UTF-8"));
+                System.out.println("Sending "+data);
+                k.addUserRecord("test-kinesis", "myPartitionKey", data); //non-blocking
             }catch(UnsupportedEncodingException e){
                 System.out.println(e);
             }
