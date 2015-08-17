@@ -13,11 +13,6 @@ public class KinesisPublish {
 
     public static void main(String[] args){
 
-        System.out.println("Just testing");
-        // KinesisProducer gets credentials automatically like
-        // DefaultAWSCredentialsProviderChain.
-        // It also gets region automatically from the EC2 metadata service.
-
         KinesisProducerConfiguration config = new KinesisProducerConfiguration()
                 .setRecordMaxBufferedTime(3000)
                 .setMaxConnections(1)
@@ -25,11 +20,11 @@ public class KinesisPublish {
                 .setRegion("us-east-1");
 
         KinesisProducer k = new KinesisProducer(config);
-        for (int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 10; ++i) {
             try {
                 ByteBuffer data = ByteBuffer.wrap("myNewData".getBytes("UTF-8"));
                 System.out.println("Sending "+data);
-                k.addUserRecord("test-kinesis", "myPartitionKey", data); //non-blocking
+                k.addUserRecord("test-kinesis", "myPartitionKey", data); //non-blocking stream, test-kinesis is the stream name
             }catch(UnsupportedEncodingException e){
                 System.out.println(e);
             }

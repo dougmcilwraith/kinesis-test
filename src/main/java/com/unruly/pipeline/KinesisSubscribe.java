@@ -41,7 +41,6 @@ public class KinesisSubscribe {
                 .build();
 
         worker.run();
-
     }
 
     public class RecordProcessor implements IRecordProcessor{
@@ -62,13 +61,13 @@ public class KinesisSubscribe {
                 try {
                     String data = decoder.decode(r.getData()).toString();
                     System.out.println("Found: " + data);
-                    /*try { // Checkpoint every record
+                    try { // Checkpoint every record
                         processRecordsInput.getCheckpointer().checkpoint(r);
                     } catch (InvalidStateException e) {
                         e.printStackTrace();
                     } catch (ShutdownException e) {
                         e.printStackTrace();
-                    }*/
+                    }
                 } catch (CharacterCodingException e) {
                     System.out.println(e);
                 }
